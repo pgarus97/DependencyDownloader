@@ -63,7 +63,7 @@ public class DependencyDownloader {
     	Files.move(Paths.get("Output"), Paths.get("scancode-toolkit-21.3.31/Output"), StandardCopyOption.REPLACE_EXISTING);
 
     	//runs scancode scan over all downloaded sources
-    	ProcessBuilder scancodeInit = new ProcessBuilder("cmd","/c", "start " , " scancode -c -n 16 --json-pp output.json Output");
+    	ProcessBuilder scancodeInit = new ProcessBuilder("cmd","/c" , " scancode -c -n 16 --json-pp output.json Output");
 		Path scancodeDir = Paths.get("scancode-toolkit-21.3.31");
 		scancodeInit.directory(scancodeDir.toFile());
 		try {
@@ -74,8 +74,8 @@ public class DependencyDownloader {
 			e.printStackTrace();
 		}
 		//only for testing; deletes the created unzipped .jars and the node_modules 
-		File scanOutDir = new File("scancode-toolkit-21.3.31/Output");
-		FileUtils.deleteDirectory(scanOutDir);
+		//File scanOutDir = new File("scancode-toolkit-21.3.31/Output");
+		//FileUtils.deleteDirectory(scanOutDir);
 	}
 	
 }
