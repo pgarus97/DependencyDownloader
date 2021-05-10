@@ -28,7 +28,7 @@ public class DependencyDownloader {
 			}
 		
 		if(Files.exists(inputDir.resolve("package.json"))) {	
-			ProcessBuilder npmInit = new ProcessBuilder("cmd","/c", "start " , " npm install");
+			ProcessBuilder npmInit = new ProcessBuilder("cmd","/c", "start " , " npm install --legacy-peer-deps");
 				npmInit.directory(inputDir.toFile());
 				try {
 					Process p = npmInit.start();
