@@ -4,15 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class UnZipper {
-    public void unzipAll(String path, String method) {
+    public void unzipAll(String path) {
         String fileName;
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles(); 
@@ -21,11 +17,7 @@ public class UnZipper {
                 fileName = listOfFiles[i].getName();
                 if (fileName.endsWith(".jar")) {
                     try {
-                    	if(method.equals("zip")) {
-                    		unzipFile(listOfFiles[i],"Output"+File.separator+fileName);	
-                    	}else if(method.equals("jar")){
-                    		unzipJar("Output"+File.separator+fileName, listOfFiles[i].getAbsolutePath());
-    					} 
+                    		unzipFile(listOfFiles[i],"Output"+File.separator+fileName);	 	
                     }catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -76,45 +68,6 @@ public class UnZipper {
             zis.close();
         
 	    }
-    
-    public void unzipJar(String destinationDir, String jarPath) throws IOException {
-		File file = new File(jarPath);
-		JarFile jar = new JarFile(file);
-
-		// fist get all directories,
-		// then make those directory on the destination Path
-		for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements();) {
-			JarEntry entry = (JarEntry) enums.nextElement();
-
-			String fileName = destinationDir + File.separator + entry.getName();
-			File f = new File(fileName);
-
-			if (fileName.endsWith("/")) {
-				f.mkdirs();
-			}
-		}
-		// now create all files
-		for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements();) {
-			JarEntry entry = (JarEntry) enums.nextElement();
-
-			String fileName = destinationDir + File.separator + entry.getName();
-			File f = new File(fileName);
-			
-            System.out.println("File unzip : " + f);
-
-
-			if (!fileName.endsWith("/")) {
-				InputStream is = jar.getInputStream(entry);
-				FileOutputStream fos = new FileOutputStream(f);
-
-				// write contents of 'is' to 'fos'
-				while (is.available() > 0) {
-					fos.write(is.read());
-				}
-				fos.close();
-				is.close();
-			}
-		}
-	}
+   
 }
 
