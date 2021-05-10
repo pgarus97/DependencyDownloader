@@ -11,6 +11,9 @@ public class App
     public static void main( String[] args ) throws IOException
     {
     	DependencyDownloader dd = new DependencyDownloader();
-    	dd.downloadDependencies();
+    	//dd.downloadDependencies();
+    	UnZipper zip = new UnZipper();
+    	String path = "Input/target/dependency";
+    	zip.unzipAll(path,"zip");
     }
 }
