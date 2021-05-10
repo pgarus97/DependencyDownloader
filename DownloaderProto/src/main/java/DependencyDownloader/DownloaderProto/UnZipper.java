@@ -8,6 +8,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class UnZipper {
+	
+	//unzips all files in a directory
     public void unzipAll(String path) {
         String fileName;
         File folder = new File(path);
