@@ -22,6 +22,7 @@ public class DependencyDownloader {
 		}
 		//download dependencies from maven with source and src classifier
 		if(Files.exists(inputDir.resolve("pom.xml"))) {	
+			System.out.println("Starting maven download...");
 			ProcessBuilder mvnInit = new ProcessBuilder("cmd","/c",  " mvn -Dclassifier=sources -DexcludeTransitive=true dependency:copy-dependencies");
 			mvnInit.directory(inputDir.toFile());
 			ProcessBuilder mvnSRCInit = new ProcessBuilder("cmd","/c",  " mvn -Dclassifier=src -DexcludeTransitive=true dependency:copy-dependencies");
@@ -31,6 +32,7 @@ public class DependencyDownloader {
 				p.waitFor();
 				Process p2 = mvnSRCInit.start();
 				p2.waitFor();
+				System.out.println("Maven download finished!");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -38,12 +40,15 @@ public class DependencyDownloader {
 		}
 		
 		//download dependencies from npm 
-		if(Files.exists(inputDir.resolve("package.json"))) {	
+		if(Files.exists(inputDir.resolve("package.json"))) {
+			System.out.println("Starting npm download...");
+
 			ProcessBuilder npmInit = new ProcessBuilder("cmd","/c",  " npm install --legacy-peer-deps");
 				npmInit.directory(inputDir.toFile());
 				try {
 					Process p = npmInit.start();
 					p.waitFor();
+					System.out.println("NPM download finished!");
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -58,24 +63,9 @@ public class DependencyDownloader {
     	File sourceOutDir = new File(sourcePath);
 		FileUtils.deleteDirectory(sourceOutDir);
 		
-        //move file directories into correct positions for scancode scan
-    	Files.move(Paths.get("Input/node_modules"), Paths.get("Output/node_modules"), StandardCopyOption.REPLACE_EXISTING);
-    	Files.move(Paths.get("Output"), Paths.get("scancode-toolkit-21.3.31/Output"), StandardCopyOption.REPLACE_EXISTING);
-
-    	//runs scancode scan over all downloaded sources
-    	ProcessBuilder scancodeInit = new ProcessBuilder("cmd","/c" , " scancode -c -n 16 --json-pp output.json Output");
-		Path scancodeDir = Paths.get("scancode-toolkit-21.3.31");
-		scancodeInit.directory(scancodeDir.toFile());
-		try {
-			Process p = scancodeInit.start();
-			p.waitFor();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//only for testing; deletes the created unzipped .jars and the node_modules 
-		//File scanOutDir = new File("scancode-toolkit-21.3.31/Output");
-		//FileUtils.deleteDirectory(scanOutDir);
+		//runs scancode on the downloaded sources
+		Scancode sc = new Scancode();
+		sc.runScancode();
 	}
 	
 }

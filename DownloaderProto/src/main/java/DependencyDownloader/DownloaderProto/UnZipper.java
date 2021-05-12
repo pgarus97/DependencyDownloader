@@ -11,6 +11,8 @@ public class UnZipper {
 	
 	//unzips all files in a directory
     public void unzipAll(String path) {
+		System.out.println("Start unzipping downloads...");
+
         String fileName;
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles(); 
@@ -27,6 +29,8 @@ public class UnZipper {
                 }
             }
         }
+		System.out.println("Unzipping finished!");
+
     }
 
     public void unzipFile(File zipFile, String outputPath) throws IOException {

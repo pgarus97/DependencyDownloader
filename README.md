@@ -10,4 +10,6 @@ You can install it with scancode -h in the command line (requires Python 3.6+) o
 
 The result of the scan will appear in the scancode toolkit directory under "output.json"
 
-You can run the tool by clicking the executable jar DependencyDownloader.jar
+You can run the tool by running java -jar DependencyDownloader.jar
+
+For testing purposes, the output folder in the scancode directory must be cleared by hand before running the tool again.
